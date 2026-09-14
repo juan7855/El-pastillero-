@@ -123,7 +123,7 @@ export const seedState = (): HubState => ({
     },
   ],
   settings: {
-    handle: "Hengrphcs",
+    handle: "Juan not",
     status: "modo grindeo activado",
     accent: "acid",
     clock24: false,

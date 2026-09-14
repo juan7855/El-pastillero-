@@ -39,7 +39,7 @@ export const ConfigPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "y2k-street-hub-data.json";
+    a.download = "el-pastillero-data.json";
     a.click();
     URL.revokeObjectURL(url);
     sfx.done();
@@ -167,7 +167,7 @@ export const ConfigPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           <div className="chrome-frame rounded-2xl p-4">
             <p className="mb-2 text-[10px] uppercase tracking-[0.34em] text-white/35">info del sistema</p>
             <ul className="space-y-1.5 text-[11px] uppercase tracking-[0.2em] text-white/45">
-              <li className="flex justify-between"><span>versión</span><span className="text-white/75">y2k-street-hub v1.0</span></li>
+              <li className="flex justify-between"><span>versión</span><span className="text-white/75">el-pastillero v1.0</span></li>
               <li className="flex justify-between"><span>almacenamiento</span><span className="text-white/75">supabase / cloud</span></li>
               <li className="flex justify-between"><span>motor</span><span className="text-white/75">react + chrome</span></li>
               <li className="flex justify-between gap-3">

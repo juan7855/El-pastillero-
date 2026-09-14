@@ -24,7 +24,7 @@ const Heading: React.FC<{ sub: string }> = ({ sub }) => (
   <div className="text-center">
     <MascotHead idSuffix="auth" className="mx-auto h-20 w-20" />
     <h1 className="chrome-text mt-4 font-display text-2xl uppercase leading-none tracking-tight sm:text-3xl">
-      y2k street hub
+      el pastillero
     </h1>
     <p className="mt-2 text-[9px] font-bold uppercase tracking-[0.36em] text-white/35">{sub}</p>
   </div>

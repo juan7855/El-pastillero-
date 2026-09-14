@@ -127,7 +127,7 @@ export const Hub: React.FC<{ onOpen: (id: ModuleId) => void; activeId: ModuleId 
         <button
           type="button"
           onClick={bumpMascot}
-          aria-label="Estado del street hub"
+          aria-label="Estado del pastillero"
           className="group relative block cursor-pointer outline-none"
           style={{ width: centerR, height: centerR }}
         >
@@ -147,7 +147,7 @@ export const Hub: React.FC<{ onOpen: (id: ModuleId) => void; activeId: ModuleId 
           </div>
         </button>
         <div className="pointer-events-none absolute left-1/2 top-full -translate-x-1/2 pt-3 text-center">
-          <p className="chrome-text font-display text-[13px] uppercase tracking-[0.34em] sm:text-[15px]">street hub</p>
+          <p className="chrome-text font-display text-[13px] uppercase tracking-[0.34em] sm:text-[15px]">standard rules</p>
           <p className="accent-text mt-1 font-tech text-[10px] uppercase tracking-[0.28em]">{quip}</p>
         </div>
       </div>
