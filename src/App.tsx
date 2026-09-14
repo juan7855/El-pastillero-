@@ -112,7 +112,7 @@ const Shell: React.FC = () => {
 
       {/* ui */}
       <div className="relative z-20 flex h-full flex-col">
-        <header className="flex items-start justify-between gap-3 px-4 pt-3 sm:px-7 sm:pt-5">
+        <header className="safe-top safe-x flex items-start justify-between gap-3 px-4 pt-3 sm:px-7 sm:pt-5">
           <div className="flex items-center gap-3 sm:gap-5">
             <div className="hidden sm:block">
               <CornerMarker />
@@ -134,7 +134,7 @@ const Shell: React.FC = () => {
           <Hub onOpen={(id) => setActive(id)} activeId={active} />
         </main>
 
-        <footer className="relative z-30">
+        <footer className="safe-bottom safe-x relative z-30">
           <Ticker items={ticker} />
         </footer>
       </div>

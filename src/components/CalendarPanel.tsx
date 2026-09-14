@@ -70,25 +70,27 @@ export const CalendarPanel: React.FC<{ onClose: () => void }> = ({ onClose }) =>
       icon={<IconCalendar className="h-full w-full" />}
       stat={`${byDate.get(today)?.length ?? 0} hoy`}
       toolbar={
-        <div className="flex w-full items-center gap-2">
-          <button type="button" className="y2k-btn grid h-8 w-8 place-items-center rounded-full" onClick={() => shift(-1)} aria-label="Mes anterior">
+        <div className="flex w-full items-center gap-1.5 sm:gap-2">
+          <button type="button" className="y2k-btn grid h-8 w-8 shrink-0 place-items-center rounded-full" onClick={() => shift(-1)} aria-label="Mes anterior">
             <IconChevron className="h-4 w-4" />
           </button>
-          <p className="chrome-text min-w-[190px] flex-1 text-center font-display text-lg uppercase tracking-tight sm:text-2xl">
+          <p className="chrome-text min-w-0 flex-1 truncate text-center font-display text-sm uppercase tracking-tight sm:text-lg md:text-2xl">
             {MONTHS[month]} <span className="text-white/35">{year}</span>
           </p>
-          <button type="button" className="y2k-btn grid h-8 w-8 place-items-center rounded-full" onClick={() => shift(1)} aria-label="Mes siguiente">
+          <button type="button" className="y2k-btn grid h-8 w-8 shrink-0 place-items-center rounded-full" onClick={() => shift(1)} aria-label="Mes siguiente">
             <IconChevron dir="right" className="h-4 w-4" />
           </button>
-          <Chip
-            onClick={() => {
-              sfx.click();
-              setCursor(new Date());
-              setSelected(today);
-            }}
-          >
-            hoy
-          </Chip>
+          <div className="shrink-0">
+            <Chip
+              onClick={() => {
+                sfx.click();
+                setCursor(new Date());
+                setSelected(today);
+              }}
+            >
+              hoy
+            </Chip>
+          </div>
         </div>
       }
       onClose={onClose}

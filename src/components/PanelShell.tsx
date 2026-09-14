@@ -24,7 +24,7 @@ export const PanelShell: React.FC<{
   }, [onClose]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6">
+    <div className="safe-top safe-bottom safe-x fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6">
       <div
         className="absolute inset-0 bg-black/72 backdrop-blur-md"
         onClick={() => {

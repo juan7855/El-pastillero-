@@ -48,6 +48,14 @@ export const Hub: React.FC<{ onOpen: (id: ModuleId) => void; activeId: ModuleId 
   const centerR = clamp(base * (narrow ? 0.3 : 0.335), 130, 300);
   const orbR = clamp(base * (narrow ? 0.155 : 0.175), 46, 150);
 
+  // Ancho máximo que puede tener la etiqueta de un nodo sin salirse de la
+  // pantalla: el doble de la distancia (en px) hasta el borde más cercano.
+  const labelWidth = (xPct: number) => {
+    if (!w) return orbR * 3.4;
+    const marginPx = (Math.min(xPct, 100 - xPct) / 100) * w;
+    return clamp(Math.min(orbR * 3.4, marginPx * 2 - 12), 80, orbR * 3.4);
+  };
+
   const iso = isoDay(new Date());
   const pending = state.tasks.filter((t) => !t.done).length;
   const todayCount = state.events.filter((e) => e.date === iso).length;
@@ -201,7 +209,7 @@ export const Hub: React.FC<{ onOpen: (id: ModuleId) => void; activeId: ModuleId 
               </Orb>
               <div
                 className="pointer-events-none absolute left-1/2 top-full -translate-x-1/2 pt-3 text-center"
-                style={{ width: orbR * 3.4 }}
+                style={{ width: labelWidth(p.x) }}
               >
                 <p
                   className={`font-body text-base font-bold italic lowercase tracking-[0.16em] transition-all duration-300 sm:text-xl ${
