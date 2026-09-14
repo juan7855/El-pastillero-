@@ -6,14 +6,20 @@ import { IconCheck, IconPlus, IconTasks, IconTrash } from "./Icons";
 import { sfx } from "../lib/sfx";
 
 const PRIORITIES: { k: Priority; label: string; color: string }[] = [
-  { k: "high", label: "crit", color: "#ff4b55" },
-  { k: "mid", label: "mid", color: "#ffc52c" },
-  { k: "low", label: "chill", color: "#7ee08a" },
+  { k: "high", label: "crítico", color: "#ff4b55" },
+  { k: "mid", label: "media", color: "#ffc52c" },
+  { k: "low", label: "tranqui", color: "#7ee08a" },
 ];
 
 const prioColor = (p: Priority) => PRIORITIES.find((x) => x.k === p)!.color;
 
 type Filter = "all" | "pending" | "done";
+
+const FILTER_LABEL: Record<Filter, string> = {
+  pending: "pendientes",
+  done: "listas",
+  all: "todas",
+};
 
 export const TasksPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const { state, addTask, toggleTask, removeTask, clearDone } = useStore();
@@ -47,19 +53,19 @@ export const TasksPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
   return (
     <PanelShell
-      title="pending"
-      kicker="module 01 — tasks / pending"
+      title="pendientes"
+      kicker="módulo 01 — tareas / pendientes"
       icon={<IconTasks className="h-full w-full" />}
-      stat={`${String(total - done).padStart(2, "0")} open / ${String(done).padStart(2, "0")} cleared`}
+      stat={`${String(total - done).padStart(2, "0")} abiertas / ${String(done).padStart(2, "0")} listas`}
       toolbar={
         <>
           {(["pending", "done", "all"] as Filter[]).map((f) => (
             <Chip key={f} active={filter === f} onClick={() => { sfx.click(); setFilter(f); }}>
-              {f}
+              {FILTER_LABEL[f]}
             </Chip>
           ))}
           <div className="ml-auto flex items-center gap-2">
-            <Chip onClick={() => { sfx.trash(); clearDone(); }}>wipe cleared</Chip>
+            <Chip onClick={() => { sfx.trash(); clearDone(); }}>borrar listas</Chip>
           </div>
         </>
       }
@@ -68,14 +74,14 @@ export const TasksPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       <form onSubmit={submit} className="mb-6 grid gap-2 sm:grid-cols-[1fr_auto]">
         <input
           className="y2k-input"
-          placeholder="what needs handlein'?"
+          placeholder="¿qué hay que resolver?"
           value={title}
           maxLength={90}
           onChange={(e) => setTitle(e.target.value)}
         />
         <div className="flex gap-2">
           <button type="submit" className="y2k-btn flex items-center gap-2 px-4 py-2 text-[11px]">
-            <IconPlus className="h-4 w-4" /> add
+            <IconPlus className="h-4 w-4" /> agregar
           </button>
         </div>
         <div className="flex flex-wrap items-center gap-2 sm:col-span-2">
@@ -96,14 +102,14 @@ export const TasksPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               </button>
             ))}
           </div>
-          <input className="y2k-input w-auto flex-1 min-w-[110px]" placeholder="tag" value={tag} onChange={(e) => setTag(e.target.value)} />
+          <input className="y2k-input w-auto flex-1 min-w-[110px]" placeholder="etiqueta" value={tag} onChange={(e) => setTag(e.target.value)} />
           <input type="date" className="y2k-input w-auto" value={due} onChange={(e) => setDue(e.target.value)} />
         </div>
       </form>
 
       <div className="mb-5">
         <div className="mb-1.5 flex items-center justify-between text-[10px] uppercase tracking-[0.3em] text-white/40">
-          <span>progress</span>
+          <span>progreso</span>
           <span className="accent-text font-tech">{pct}%</span>
         </div>
         <div className="h-3 overflow-hidden rounded-full bg-black/60 shadow-[inset_0_2px_6px_rgba(0,0,0,.9),0_0_0_1px_rgba(255,255,255,.12)]">
@@ -136,7 +142,7 @@ export const TasksPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                   ? "bg-[rgb(var(--accent))] text-black shadow-[0_0_18px_rgb(var(--accent)/.6)]"
                   : "bg-black/60 text-transparent shadow-[inset_0_2px_8px_rgba(0,0,0,.9),0_0_0_1px_rgba(255,255,255,.2)] hover:text-white/60"
               }`}
-              aria-label={t.done ? "Mark pending" : "Mark done"}
+              aria-label={t.done ? "Marcar pendiente" : "Marcar lista"}
             >
               <IconCheck className="h-4 w-4" />
             </button>
@@ -150,7 +156,7 @@ export const TasksPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                 <span className="text-white/35">#{t.tag}</span>
                 {t.due && (
                   <span className={t.due < isoDay(new Date()) && !t.done ? "text-[#ff6b6b]" : "text-white/35"}>
-                    due {t.due}
+                    vence {t.due}
                   </span>
                 )}
               </div>
@@ -160,7 +166,7 @@ export const TasksPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               type="button"
               onClick={() => { sfx.trash(); removeTask(t.id); }}
               className="grid h-8 w-8 shrink-0 place-items-center rounded-full text-white/25 opacity-0 transition-all hover:bg-white/10 hover:text-[#ff5b60] group-hover:opacity-100"
-              aria-label="Delete task"
+              aria-label="Eliminar tarea"
             >
               <IconTrash className="h-4 w-4" />
             </button>
@@ -168,8 +174,8 @@ export const TasksPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         ))}
         {shown.length === 0 && (
           <li className="rounded-2xl border border-dashed border-white/12 py-14 text-center">
-            <p className="font-display text-lg uppercase tracking-tight text-white/30">nothing here</p>
-            <p className="mt-1 text-[11px] uppercase tracking-[0.3em] text-white/20">add a task above</p>
+            <p className="font-display text-lg uppercase tracking-tight text-white/30">nada por acá</p>
+            <p className="mt-1 text-[11px] uppercase tracking-[0.3em] text-white/20">agregá una tarea arriba</p>
           </li>
         )}
       </ul>

@@ -46,18 +46,18 @@ export const ConfigPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   };
 
   const stats = [
-    { k: "tasks", v: state.tasks.length },
-    { k: "cleared", v: state.tasks.filter((t) => t.done).length },
-    { k: "blocks", v: state.events.length },
-    { k: "scratches", v: state.notes.length },
+    { k: "tareas", v: state.tasks.length },
+    { k: "listas", v: state.tasks.filter((t) => t.done).length },
+    { k: "bloques", v: state.events.length },
+    { k: "notas", v: state.notes.length },
   ];
 
   return (
     <PanelShell
-      title="config"
-      kicker="module 04 — settings / system"
+      title="ajustes"
+      kicker="módulo 04 — ajustes / sistema"
       icon={<IconConfig className="h-full w-full" />}
-      stat={`accent: ${ACCENTS[s.accent].label}`}
+      stat={`tinte: ${ACCENTS[s.accent].label}`}
       onClose={onClose}
     >
       <div className="grid gap-6 lg:grid-cols-[1fr_1fr]">
@@ -75,7 +75,7 @@ export const ConfigPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                     value={s.handle}
                     maxLength={18}
                     onChange={(e) => updateSettings({ handle: e.target.value })}
-                    placeholder="handle"
+                    placeholder="apodo"
                   />
                 </label>
                 <input
@@ -83,14 +83,14 @@ export const ConfigPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                   value={s.status}
                   maxLength={28}
                   onChange={(e) => updateSettings({ status: e.target.value })}
-                  placeholder="status line"
+                  placeholder="línea de estado"
                 />
               </div>
             </div>
           </div>
 
           <div className="chrome-frame rounded-2xl p-4">
-            <p className="mb-3 text-[10px] uppercase tracking-[0.34em] text-white/35">chrome tint</p>
+            <p className="mb-3 text-[10px] uppercase tracking-[0.34em] text-white/35">tinte cromado</p>
             <div className="flex flex-wrap gap-3">
               {(Object.keys(ACCENTS) as AccentKey[]).map((k) => {
                 const a = ACCENTS[k];
@@ -124,17 +124,17 @@ export const ConfigPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           </div>
 
           <div className="grid gap-2 sm:grid-cols-2">
-            <Toggle label="24h clock" hint={s.clock24 ? "military time" : "12 hour am/pm"} on={s.clock24} onChange={() => { sfx.click(); updateSettings({ clock24: !s.clock24 }); }} />
+            <Toggle label="reloj 24h" hint={s.clock24 ? "formato militar" : "12 horas am/pm"} on={s.clock24} onChange={() => { sfx.click(); updateSettings({ clock24: !s.clock24 }); }} />
             <Toggle
-              label="sfx"
-              hint={s.sfx ? "click blips on" : "silent mode"}
+              label="sonido"
+              hint={s.sfx ? "clicks activados" : "modo silencio"}
               on={s.sfx}
               onChange={() => {
                 updateSettings({ sfx: !s.sfx });
                 if (!s.sfx) sfx.click();
               }}
             />
-            <Toggle label="motion" hint={s.motion ? "float + spin on" : "static layout"} on={s.motion} onChange={() => { sfx.click(); updateSettings({ motion: !s.motion }); }} />
+            <Toggle label="movimiento" hint={s.motion ? "flotado + giro on" : "diseño estático"} on={s.motion} onChange={() => { sfx.click(); updateSettings({ motion: !s.motion }); }} />
             <button
               type="button"
               onClick={exportJson}
@@ -144,8 +144,8 @@ export const ConfigPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                 <IconSound className="h-4 w-4 text-white/60" />
               </span>
               <span className="min-w-0">
-                <span className="block text-sm font-bold uppercase tracking-[0.16em] text-white/90">export</span>
-                <span className="block truncate text-[10px] uppercase tracking-[0.2em] text-white/35">save .json backup</span>
+                <span className="block text-sm font-bold uppercase tracking-[0.16em] text-white/90">exportar</span>
+                <span className="block truncate text-[10px] uppercase tracking-[0.2em] text-white/35">guardar backup .json</span>
               </span>
             </button>
           </div>
@@ -153,7 +153,7 @@ export const ConfigPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
         <div className="space-y-4">
           <div className="chrome-frame rounded-2xl p-4">
-            <p className="mb-3 text-[10px] uppercase tracking-[0.34em] text-white/35">hub telemetry</p>
+            <p className="mb-3 text-[10px] uppercase tracking-[0.34em] text-white/35">telemetría del hub</p>
             <div className="grid grid-cols-2 gap-2">
               {stats.map((st) => (
                 <div key={st.k} className="rounded-xl bg-black/45 p-3 shadow-[inset_0_2px_8px_rgba(0,0,0,.8),0_0_0_1px_rgba(255,255,255,.08)]">
@@ -165,18 +165,18 @@ export const ConfigPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           </div>
 
           <div className="chrome-frame rounded-2xl p-4">
-            <p className="mb-2 text-[10px] uppercase tracking-[0.34em] text-white/35">system info</p>
+            <p className="mb-2 text-[10px] uppercase tracking-[0.34em] text-white/35">info del sistema</p>
             <ul className="space-y-1.5 text-[11px] uppercase tracking-[0.2em] text-white/45">
-              <li className="flex justify-between"><span>build</span><span className="text-white/75">y2k-street-hub v1.0</span></li>
-              <li className="flex justify-between"><span>storage</span><span className="text-white/75">supabase / cloud</span></li>
-              <li className="flex justify-between"><span>engine</span><span className="text-white/75">react + chrome</span></li>
+              <li className="flex justify-between"><span>versión</span><span className="text-white/75">y2k-street-hub v1.0</span></li>
+              <li className="flex justify-between"><span>almacenamiento</span><span className="text-white/75">supabase / cloud</span></li>
+              <li className="flex justify-between"><span>motor</span><span className="text-white/75">react + chrome</span></li>
               <li className="flex justify-between gap-3">
-                <span>account</span>
+                <span>cuenta</span>
                 <span className="min-w-0 truncate normal-case tracking-normal text-white/75" title={email ?? ""}>{email ?? "—"}</span>
               </li>
               <li className="flex justify-between">
-                <span>sync</span>
-                <span className={syncing ? "text-[rgb(var(--accent))]" : "text-white/75"}>{syncing ? "saving…" : "up to date"}</span>
+                <span>sincronización</span>
+                <span className={syncing ? "text-[rgb(var(--accent))]" : "text-white/75"}>{syncing ? "guardando…" : "al día"}</span>
               </li>
             </ul>
             <div className="mt-4 flex flex-wrap gap-2">
@@ -187,7 +187,7 @@ export const ConfigPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                 }}
               >
                 <span className="flex items-center gap-1.5">
-                  <IconReset className="h-3.5 w-3.5" /> factory reset
+                  <IconReset className="h-3.5 w-3.5" /> reiniciar de fábrica
                 </span>
               </Chip>
               <Chip
@@ -197,12 +197,12 @@ export const ConfigPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                 }}
               >
                 <span className="flex items-center gap-1.5">
-                  <IconUser className="h-3.5 w-3.5" /> sign out
+                  <IconUser className="h-3.5 w-3.5" /> cerrar sesión
                 </span>
               </Chip>
             </div>
             <p className="mt-3 text-[10px] leading-relaxed normal-case tracking-normal text-white/25">
-              Factory reset wipes the tasks, blocks and scratches stored in your account and reloads the demo payload.
+              El reinicio de fábrica borra las tareas, bloques y notas guardadas en tu cuenta y vuelve a cargar el contenido de ejemplo.
             </p>
           </div>
         </div>

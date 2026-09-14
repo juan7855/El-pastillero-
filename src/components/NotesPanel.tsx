@@ -20,16 +20,16 @@ export const NotesPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
     <PanelShell
       title="ideas"
-      kicker="module 03 — ideas / notes"
+      kicker="módulo 03 — ideas / notas"
       icon={<IconIdeas className="h-full w-full" />}
-      stat={`${state.notes.filter((n) => n.pinned).length} pinned / ${state.notes.length} total`}
+      stat={`${state.notes.filter((n) => n.pinned).length} fijadas / ${state.notes.length} total`}
       toolbar={
         <>
           <div className="relative min-w-[180px] flex-1">
             <IconSearch className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/30" />
             <input
               className="y2k-input pl-9"
-              placeholder="search the vault"
+              placeholder="buscar en el archivo"
               value={q}
               onChange={(e) => setQ(e.target.value)}
             />
@@ -41,7 +41,7 @@ export const NotesPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             }}
           >
             <span className="flex items-center gap-1.5">
-              <IconPlus className="h-3.5 w-3.5" /> new scratch
+              <IconPlus className="h-3.5 w-3.5" /> nota nueva
             </span>
           </Chip>
         </>
@@ -68,7 +68,7 @@ export const NotesPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                 <input
                   value={n.title}
                   onChange={(e) => updateNote(n.id, { title: e.target.value })}
-                  placeholder="scratch title"
+                  placeholder="título de la nota"
                   className="min-w-0 flex-1 bg-transparent font-display text-base uppercase leading-tight tracking-tight outline-none placeholder:opacity-40"
                   style={{ color: c.ink }}
                 />
@@ -80,7 +80,7 @@ export const NotesPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                   }}
                   className={`grid h-7 w-7 place-items-center rounded-full transition-colors ${n.pinned ? "opacity-100" : "opacity-30 hover:opacity-70"}`}
                   style={{ background: n.pinned ? c.ink : "transparent", color: n.pinned ? c.face : c.ink }}
-                  aria-label="Pin note"
+                  aria-label="Fijar nota"
                 >
                   <IconPin className="h-3.5 w-3.5" />
                 </button>
@@ -88,7 +88,7 @@ export const NotesPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               <textarea
                 value={n.body}
                 onChange={(e) => updateNote(n.id, { body: e.target.value })}
-                placeholder="type it before you lose it..."
+                placeholder="escribilo antes de que se te vaya..."
                 rows={6}
                 className="y2k-scroll min-h-[130px] flex-1 resize-none bg-transparent text-[13px] font-medium leading-snug outline-none placeholder:opacity-40"
                 style={{ color: c.ink }}
@@ -104,10 +104,10 @@ export const NotesPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                   className="rounded-full px-2 py-1 text-[9px] font-bold uppercase tracking-[0.22em]"
                   style={{ background: `${c.ink}22` }}
                 >
-                  recolor
+                  recolorear
                 </button>
                 <span className="ml-auto font-tech text-[9px] uppercase tracking-[0.2em] opacity-45">
-                  {new Date(n.updated).toLocaleDateString(undefined, { month: "short", day: "numeric" })}
+                  {new Date(n.updated).toLocaleDateString("es-ES", { month: "short", day: "numeric" })}
                 </span>
                 <button
                   type="button"
@@ -116,7 +116,7 @@ export const NotesPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                     removeNote(n.id);
                   }}
                   className="grid h-7 w-7 place-items-center rounded-full opacity-30 transition-opacity hover:opacity-90"
-                  aria-label="Delete note"
+                  aria-label="Eliminar nota"
                 >
                   <IconTrash className="h-4 w-4" />
                 </button>
@@ -135,7 +135,7 @@ export const NotesPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         >
           <div className="text-center">
             <IconPlus className="mx-auto h-8 w-8 text-white/30" />
-            <p className="mt-2 text-[10px] uppercase tracking-[0.32em] text-white/30">new scratch</p>
+            <p className="mt-2 text-[10px] uppercase tracking-[0.32em] text-white/30">nota nueva</p>
           </div>
         </button>
       </div>

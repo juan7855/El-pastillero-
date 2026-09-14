@@ -5,8 +5,8 @@ import { isoDay } from "../lib/types";
 import { IconCalendar, IconChevron, IconPlus, IconTrash } from "./Icons";
 import { sfx } from "../lib/sfx";
 
-const WD = ["su", "mo", "tu", "we", "th", "fr", "sa"];
-const MONTHS = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
+const WD = ["do", "lu", "ma", "mi", "ju", "vi", "sá"];
+const MONTHS = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
 
 const TAG_TINT: Record<string, string> = {
   work: "#70ccff",
@@ -65,19 +65,19 @@ export const CalendarPanel: React.FC<{ onClose: () => void }> = ({ onClose }) =>
 
   return (
     <PanelShell
-      title="schedule"
-      kicker="module 02 — calendar / schedule"
+      title="agenda"
+      kicker="módulo 02 — calendario / agenda"
       icon={<IconCalendar className="h-full w-full" />}
-      stat={`${byDate.get(today)?.length ?? 0} today`}
+      stat={`${byDate.get(today)?.length ?? 0} hoy`}
       toolbar={
         <div className="flex w-full items-center gap-2">
-          <button type="button" className="y2k-btn grid h-8 w-8 place-items-center rounded-full" onClick={() => shift(-1)} aria-label="Previous month">
+          <button type="button" className="y2k-btn grid h-8 w-8 place-items-center rounded-full" onClick={() => shift(-1)} aria-label="Mes anterior">
             <IconChevron className="h-4 w-4" />
           </button>
           <p className="chrome-text min-w-[190px] flex-1 text-center font-display text-lg uppercase tracking-tight sm:text-2xl">
             {MONTHS[month]} <span className="text-white/35">{year}</span>
           </p>
-          <button type="button" className="y2k-btn grid h-8 w-8 place-items-center rounded-full" onClick={() => shift(1)} aria-label="Next month">
+          <button type="button" className="y2k-btn grid h-8 w-8 place-items-center rounded-full" onClick={() => shift(1)} aria-label="Mes siguiente">
             <IconChevron dir="right" className="h-4 w-4" />
           </button>
           <Chip
@@ -87,7 +87,7 @@ export const CalendarPanel: React.FC<{ onClose: () => void }> = ({ onClose }) =>
               setSelected(today);
             }}
           >
-            today
+            hoy
           </Chip>
         </div>
       }
@@ -136,7 +136,7 @@ export const CalendarPanel: React.FC<{ onClose: () => void }> = ({ onClose }) =>
           </div>
 
           <div className="mt-5 rounded-2xl border border-white/10 bg-black/30 p-4">
-            <p className="mb-2 text-[10px] uppercase tracking-[0.32em] text-white/35">next up</p>
+            <p className="mb-2 text-[10px] uppercase tracking-[0.32em] text-white/35">lo próximo</p>
             <ul className="space-y-1.5">
               {upcoming.map((e) => (
                 <li key={e.id} className="flex items-center gap-3 text-xs">
@@ -146,7 +146,7 @@ export const CalendarPanel: React.FC<{ onClose: () => void }> = ({ onClose }) =>
                   <span className="truncate font-semibold text-white/80">{e.title}</span>
                 </li>
               ))}
-              {upcoming.length === 0 && <li className="text-xs uppercase tracking-[0.2em] text-white/25">calendar empty</li>}
+              {upcoming.length === 0 && <li className="text-xs uppercase tracking-[0.2em] text-white/25">calendario vacío</li>}
             </ul>
           </div>
         </div>
@@ -154,16 +154,16 @@ export const CalendarPanel: React.FC<{ onClose: () => void }> = ({ onClose }) =>
         <div>
           <div className="chrome-frame rounded-2xl p-4">
             <p className="chrome-text font-display text-xl uppercase tracking-tight">
-              {new Date(selected + "T12:00:00").toLocaleDateString(undefined, { weekday: "long", month: "short", day: "numeric" })}
+              {new Date(selected + "T12:00:00").toLocaleDateString("es-ES", { weekday: "long", month: "short", day: "numeric" })}
             </p>
-            <p className="mt-0.5 text-[10px] uppercase tracking-[0.32em] text-white/35">{dayEvents.length} block(s) booked</p>
+            <p className="mt-0.5 text-[10px] uppercase tracking-[0.32em] text-white/35">{dayEvents.length} bloque(s) agendado(s)</p>
 
             <form onSubmit={submit} className="mt-4 grid gap-2">
-              <input className="y2k-input" placeholder="block name" value={title} maxLength={70} onChange={(e) => setTitle(e.target.value)} />
+              <input className="y2k-input" placeholder="nombre del bloque" value={title} maxLength={70} onChange={(e) => setTitle(e.target.value)} />
               <div className="flex gap-2">
                 <input type="time" className="y2k-input w-auto" value={time} onChange={(e) => setTime(e.target.value)} />
-                <input className="y2k-input flex-1" placeholder="tag" value={tag} onChange={(e) => setTag(e.target.value)} />
-                <button type="submit" className="y2k-btn grid w-11 place-items-center rounded-xl" aria-label="Add block">
+                <input className="y2k-input flex-1" placeholder="etiqueta" value={tag} onChange={(e) => setTag(e.target.value)} />
+                <button type="submit" className="y2k-btn grid w-11 place-items-center rounded-xl" aria-label="Agregar bloque">
                   <IconPlus className="h-4 w-4" />
                 </button>
               </div>
@@ -186,7 +186,7 @@ export const CalendarPanel: React.FC<{ onClose: () => void }> = ({ onClose }) =>
                       removeEvent(e.id);
                     }}
                     className="grid h-7 w-7 place-items-center rounded-full text-white/25 transition-colors hover:text-[#ff5b60]"
-                    aria-label="Remove block"
+                    aria-label="Quitar bloque"
                   >
                     <IconTrash className="h-4 w-4" />
                   </button>
@@ -194,7 +194,7 @@ export const CalendarPanel: React.FC<{ onClose: () => void }> = ({ onClose }) =>
               ))}
               {dayEvents.length === 0 && (
                 <li className="rounded-xl border border-dashed border-white/12 py-8 text-center text-[11px] uppercase tracking-[0.3em] text-white/25">
-                  free — go outside
+                  libre — salí un rato
                 </li>
               )}
             </ul>

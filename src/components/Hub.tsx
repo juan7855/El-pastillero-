@@ -27,11 +27,11 @@ const NODE_POS_NARROW: Record<ModuleId, { x: number; y: number }> = {
 const ORDER: ModuleId[] = ["tasks", "calendar", "ideas", "config"];
 
 const QUIPS = [
-  "STAY GRIMY",
-  "NO DAYS OFF",
-  "CHROME PLATED FOCUS",
-  "GRIND > LUCK",
-  "FRESH COAT DRYING",
+  "SEGUÍ SUCIO",
+  "SIN DÍAS DE DESCANSO",
+  "FOCO BAÑADO EN CROMO",
+  "GRINDEO > SUERTE",
+  "PINTURA FRESCA SECANDO",
 ];
 
 export const Hub: React.FC<{ onOpen: (id: ModuleId) => void; activeId: ModuleId | null }> = ({ onOpen, activeId }) => {
@@ -54,9 +54,9 @@ export const Hub: React.FC<{ onOpen: (id: ModuleId) => void; activeId: ModuleId 
   const openNotes = state.notes.length;
 
   const stats: Record<ModuleId, string> = {
-    tasks: `${String(pending).padStart(2, "0")} pending`,
-    calendar: `${String(todayCount).padStart(2, "0")} today`,
-    ideas: `${String(openNotes).padStart(2, "0")} saved`,
+    tasks: `${String(pending).padStart(2, "0")} pendientes`,
+    calendar: `${String(todayCount).padStart(2, "0")} hoy`,
+    ideas: `${String(openNotes).padStart(2, "0")} guardadas`,
     config: ACCENTS[state.settings.accent].label,
   };
 
@@ -68,10 +68,10 @@ export const Hub: React.FC<{ onOpen: (id: ModuleId) => void; activeId: ModuleId 
   };
 
   const labels: Record<ModuleId, string> = {
-    tasks: "tasks",
-    calendar: "calendar",
+    tasks: "tareas",
+    calendar: "calendario",
     ideas: "ideas",
-    config: "config",
+    config: "ajustes",
   };
 
   const positions = narrow ? NODE_POS_NARROW : NODE_POS_WIDE;
@@ -127,7 +127,7 @@ export const Hub: React.FC<{ onOpen: (id: ModuleId) => void; activeId: ModuleId 
         <button
           type="button"
           onClick={bumpMascot}
-          aria-label="Street hub status"
+          aria-label="Estado del street hub"
           className="group relative block cursor-pointer outline-none"
           style={{ width: centerR, height: centerR }}
         >
@@ -222,11 +222,11 @@ export const Hub: React.FC<{ onOpen: (id: ModuleId) => void; activeId: ModuleId 
       {/* keyboard hint */}
       <div className="pointer-events-none absolute bottom-14 left-1/2 z-30 hidden -translate-x-1/2 items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-white/25 md:flex">
         <kbd className="rounded border border-white/15 bg-white/5 px-1.5 py-0.5">←→</kbd>
-        <span>navigate</span>
+        <span>navegar</span>
         <kbd className="rounded border border-white/15 bg-white/5 px-1.5 py-0.5">enter</kbd>
-        <span>open</span>
+        <span>abrir</span>
         <kbd className="rounded border border-white/15 bg-white/5 px-1.5 py-0.5">1-4</kbd>
-        <span>quick jump</span>
+        <span>salto rápido</span>
       </div>
     </div>
   );

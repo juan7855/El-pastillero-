@@ -48,11 +48,11 @@ export interface HubState {
 }
 
 export const ACCENTS: Record<AccentKey, { label: string; rgb: string; swatch: string }> = {
-  acid: { label: "Acid Lime", rgb: "214 255 26", swatch: "#d6ff1a" },
-  ice: { label: "Chrome Ice", rgb: "112 204 255", swatch: "#70ccff" },
-  blood: { label: "Blood Red", rgb: "255 62 72", swatch: "#ff3e48" },
-  gold: { label: "24K Gold", rgb: "255 197 44", swatch: "#ffc52c" },
-  violet: { label: "Ultra Violet", rgb: "186 124 255", swatch: "#ba7cff" },
+  acid: { label: "Lima Ácida", rgb: "214 255 26", swatch: "#d6ff1a" },
+  ice: { label: "Hielo Cromado", rgb: "112 204 255", swatch: "#70ccff" },
+  blood: { label: "Rojo Sangre", rgb: "255 62 72", swatch: "#ff3e48" },
+  gold: { label: "Oro 24K", rgb: "255 197 44", swatch: "#ffc52c" },
+  violet: { label: "Ultra Violeta", rgb: "186 124 255", swatch: "#ba7cff" },
 };
 
 export const NOTE_COLORS: Record<NoteColor, { label: string; face: string; ink: string }> = {
@@ -65,9 +65,9 @@ export const NOTE_COLORS: Record<NoteColor, { label: string; face: string; ink: 
 };
 
 export const PRIORITY_LABEL: Record<Priority, string> = {
-  high: "critical",
-  mid: "mid",
-  low: "chill",
+  high: "crítico",
+  mid: "media",
+  low: "tranqui",
 };
 
 export const uid = () => Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4);
@@ -83,40 +83,40 @@ const addDays = (n: number) => {
 
 export const seedState = (): HubState => ({
   tasks: [
-    { id: uid(), title: "Bomb the missing deck slides", done: false, priority: "high", tag: "work", created: Date.now(), due: addDays(0) },
-    { id: uid(), title: "Restock spray caps + markers", done: false, priority: "mid", tag: "errand", created: Date.now(), due: addDays(2) },
-    { id: uid(), title: "30 min skate / stretch", done: false, priority: "low", tag: "body", created: Date.now(), due: addDays(1) },
-    { id: uid(), title: "Call back the studio guy", done: true, priority: "mid", tag: "work", created: Date.now(), due: addDays(-1) },
-    { id: uid(), title: "Back up sample pack to drive", done: true, priority: "low", tag: "files", created: Date.now(), due: addDays(-2) },
+    { id: uid(), title: "Terminar las diapos que faltan", done: false, priority: "high", tag: "work", created: Date.now(), due: addDays(0) },
+    { id: uid(), title: "Reponer aerosoles y fibrones", done: false, priority: "mid", tag: "errand", created: Date.now(), due: addDays(2) },
+    { id: uid(), title: "30 min de skate / estirar", done: false, priority: "low", tag: "body", created: Date.now(), due: addDays(1) },
+    { id: uid(), title: "Devolver la llamada del estudio", done: true, priority: "mid", tag: "work", created: Date.now(), due: addDays(-1) },
+    { id: uid(), title: "Backupear los samples al disco", done: true, priority: "low", tag: "files", created: Date.now(), due: addDays(-2) },
   ],
   events: [
-    { id: uid(), date: addDays(0), time: "09:30", title: "Crew check-in", tag: "crew" },
-    { id: uid(), date: addDays(0), time: "20:00", title: "Open mic / set", tag: "show" },
-    { id: uid(), date: addDays(1), time: "12:00", title: "Studio block", tag: "work" },
-    { id: uid(), date: addDays(3), time: "18:30", title: "Gallery hang", tag: "art" },
-    { id: uid(), date: addDays(6), time: "11:00", title: "Flea market run", tag: "life" },
+    { id: uid(), date: addDays(0), time: "09:30", title: "Reunión con la banda", tag: "crew" },
+    { id: uid(), date: addDays(0), time: "20:00", title: "Micrófono abierto / set", tag: "show" },
+    { id: uid(), date: addDays(1), time: "12:00", title: "Bloque de estudio", tag: "work" },
+    { id: uid(), date: addDays(3), time: "18:30", title: "Inauguración de galería", tag: "art" },
+    { id: uid(), date: addDays(6), time: "11:00", title: "Vuelta por la feria", tag: "life" },
   ],
   notes: [
     {
       id: uid(),
-      title: "Hook idea — 140bpm",
-      body: "Detuned bell over broken kick. Chipmunk vocal chop on the 4th bar. Keep it grimy, don't quantize the hats.",
+      title: "Idea de gancho — 140bpm",
+      body: "Campana desafinada sobre kick roto. Voz chipmunk cortada en el 4to compás. Mantenerlo sucio, no cuantizar los hi-hats.",
       color: "acid",
       pinned: true,
       updated: Date.now(),
     },
     {
       id: uid(),
-      title: "Mural sketch notes",
-      body: "Chrome bubble letter O. Chain link underline. Background: wet asphalt black + lime bleed.",
+      title: "Bocetos para el mural",
+      body: "Letra O tipo burbuja cromada. Subrayado de cadena. Fondo: asfalto mojado negro + salpicado lima.",
       color: "ice",
       pinned: false,
       updated: Date.now(),
     },
     {
       id: uid(),
-      title: "Links to peep",
-      body: "Rave archive site / bootleg PSP themes / chrome type specimen pdf.",
+      title: "Links para revisar",
+      body: "Archivo de rave / temas bootleg de PSP / pdf de tipografías cromadas.",
       color: "violet",
       pinned: false,
       updated: Date.now(),
@@ -124,7 +124,7 @@ export const seedState = (): HubState => ({
   ],
   settings: {
     handle: "Hengrphcs",
-    status: "on grindex mode",
+    status: "modo grindeo activado",
     accent: "acid",
     clock24: false,
     sfx: true,

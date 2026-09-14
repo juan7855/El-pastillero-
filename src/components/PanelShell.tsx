@@ -56,7 +56,7 @@ export const PanelShell: React.FC<{
               onClose();
             }}
             className="y2k-btn grid h-10 w-10 shrink-0 place-items-center rounded-full"
-            aria-label="Close module"
+            aria-label="Cerrar módulo"
           >
             <IconX className="h-5 w-5" />
           </button>

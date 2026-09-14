@@ -18,7 +18,7 @@ const BootSplash: React.FC = () => (
     <div className="w-[min(78vw,420px)] text-center">
       <MascotHead idSuffix="boot" className="mx-auto h-24 w-24 mascot-pulse" />
       <h1 className="chrome-text mt-5 font-display text-2xl uppercase tracking-tight sm:text-4xl">y2k street hub</h1>
-      <p className="mt-2 text-[9px] font-bold uppercase tracking-[0.42em] text-white/35">loading street assets</p>
+      <p className="mt-2 text-[9px] font-bold uppercase tracking-[0.42em] text-white/35">cargando assets de la calle</p>
       <div className="mt-4 h-2 overflow-hidden rounded-full bg-black/70 shadow-[inset_0_2px_6px_rgba(0,0,0,.9),0_0_0_1px_rgba(255,255,255,.12)]">
         <div
           className="boot-bar h-full rounded-full"
@@ -88,13 +88,13 @@ const Shell: React.FC = () => {
 
   const ticker = [
     "y2k street hub",
-    `pending ${String(pending).padStart(2, "0")}`,
-    `cleared ${String(cleared).padStart(2, "0")}`,
-    `today ${String(today).padStart(2, "0")}`,
-    `scratches ${String(state.notes.length).padStart(2, "0")}`,
-    `operator ${state.settings.handle}`,
+    `pendientes ${String(pending).padStart(2, "0")}`,
+    `listas ${String(cleared).padStart(2, "0")}`,
+    `hoy ${String(today).padStart(2, "0")}`,
+    `notas ${String(state.notes.length).padStart(2, "0")}`,
+    `operador ${state.settings.handle}`,
     state.settings.status,
-    "keep the chrome clean",
+    "mantené el cromo limpio",
   ];
 
   return (
@@ -122,7 +122,7 @@ const Shell: React.FC = () => {
                 y2k street hub
               </h1>
               <p className="mt-1 text-[8px] font-bold uppercase tracking-[0.36em] text-white/35 sm:text-[9px]">
-                personal productivity system
+                sistema de productividad personal
               </p>
               <span className="blink absolute -right-3 -top-1 h-1.5 w-1.5 rounded-full bg-[rgb(var(--accent))] shadow-[0_0_10px_rgb(var(--accent))]" />
             </div>
