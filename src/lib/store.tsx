@@ -84,6 +84,11 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const uidRef = useRef<string | null>(userId);
   uidRef.current = userId;
 
+  // Espejo del estado, para calcular la fila a guardar sin meter efectos
+  // dentro de un updater de setState (StrictMode los ejecuta dos veces).
+  const stateRef = useRef(state);
+  stateRef.current = state;
+
   /** Lanza una escritura, contabiliza que está en vuelo y captura el error. */
   const run = useCallback((fn: (userId: string) => Promise<unknown>) => {
     const id = uidRef.current;
@@ -139,13 +144,21 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const [reloadKey, setReloadKey] = useState(0);
 
+  // Marca la carga ya disparada. Sin esto, el doble montaje de StrictMode
+  // sembraría una cuenta nueva dos veces, con ids distintos en cada pasada.
+  const bootstrapped = useRef<string | null>(null);
+
   useEffect(() => {
     if (!userId) {
+      bootstrapped.current = null;
       setState(EMPTY);
       setStatus("loading");
       return;
     }
-    let alive = true;
+
+    const key = `${userId}:${reloadKey}`;
+    if (bootstrapped.current === key) return;
+    bootstrapped.current = key;
     setStatus("loading");
 
     (async () => {
@@ -156,21 +169,18 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           next = initialStateForNewAccount();
           await remote.pushAll(userId, next);
         }
-        if (!alive) return;
+        // Descartar si mientras tanto cambió la sesión.
+        if (uidRef.current !== userId) return;
         setState(next);
         setStatus("ready");
         setSyncError(null);
       } catch (e) {
         console.error("[hub] fallo al cargar", e);
-        if (!alive) return;
+        if (uidRef.current !== userId) return;
         setSyncError(e instanceof Error ? e.message : "No se pudieron cargar los datos");
         setStatus("error");
       }
     })();
-
-    return () => {
-      alive = false;
-    };
   }, [userId, reloadKey]);
 
   /* ---------------- efectos de presentación ---------------- */
@@ -207,12 +217,11 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const toggleTask: Store["toggleTask"] = useCallback(
     (id) => {
-      setState((s) => {
-        const next = s.tasks.map((t) => (t.id === id ? { ...t, done: !t.done } : t));
-        const changed = next.find((t) => t.id === id);
-        if (changed) run((u) => remote.saveTask(u, changed));
-        return { ...s, tasks: next };
-      });
+      const current = stateRef.current.tasks.find((t) => t.id === id);
+      if (!current) return;
+      const next: Task = { ...current, done: !current.done };
+      setState((s) => ({ ...s, tasks: s.tasks.map((t) => (t.id === id ? next : t)) }));
+      run((u) => remote.saveTask(u, next));
     },
     [run],
   );
@@ -264,16 +273,13 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const updateNote: Store["updateNote"] = useCallback(
     (id, patch) => {
-      setState((s) => {
-        const next = s.notes.map((n) => (n.id === id ? { ...n, ...patch, updated: Date.now() } : n));
-        const changed = next.find((n) => n.id === id);
-        if (changed) {
-          // Título y cuerpo cambian en cada tecla: la escritura se difiere.
-          pendingNotes.current.set(id, changed);
-          scheduleFlush();
-        }
-        return { ...s, notes: next };
-      });
+      const current = stateRef.current.notes.find((n) => n.id === id);
+      if (!current) return;
+      const next: Note = { ...current, ...patch, updated: Date.now() };
+      setState((s) => ({ ...s, notes: s.notes.map((n) => (n.id === id ? next : n)) }));
+      // Título y cuerpo cambian en cada tecla: la escritura se difiere.
+      pendingNotes.current.set(id, next);
+      scheduleFlush();
     },
     [scheduleFlush],
   );
@@ -290,12 +296,10 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const updateSettings: Store["updateSettings"] = useCallback(
     (patch) => {
-      setState((s) => {
-        const settings = { ...s.settings, ...patch };
-        pendingSettings.current = settings;
-        scheduleFlush();
-        return { ...s, settings };
-      });
+      const settings: Settings = { ...stateRef.current.settings, ...patch };
+      setState((s) => ({ ...s, settings }));
+      pendingSettings.current = settings;
+      scheduleFlush();
     },
     [scheduleFlush],
   );
