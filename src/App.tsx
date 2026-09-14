@@ -121,7 +121,7 @@ const Shell: React.FC = () => {
               <h1 className="chrome-text font-display text-lg uppercase leading-none tracking-tight sm:text-2xl">
                 el pastillero
               </h1>
-              <p className="mt-1 text-[8px] font-bold uppercase tracking-[0.36em] text-white/35 sm:text-[9px]">
+              <p className="mt-1 hidden text-[8px] font-bold uppercase tracking-[0.36em] text-white/35 sm:block sm:text-[9px]">
                 sistema de productividad personal
               </p>
               <span className="blink absolute -right-3 -top-1 h-1.5 w-1.5 rounded-full bg-[rgb(var(--accent))] shadow-[0_0_10px_rgb(var(--accent))]" />

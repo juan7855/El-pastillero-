@@ -154,7 +154,10 @@ export const Hub: React.FC<{ onOpen: (id: ModuleId) => void; activeId: ModuleId 
             />
           </div>
         </button>
-        <div className="pointer-events-none absolute left-1/2 top-full -translate-x-1/2 pt-3 text-center">
+        <div
+          className="pointer-events-none absolute left-1/2 top-full -translate-x-1/2 whitespace-nowrap pt-3 text-center"
+          style={{ width: clamp(w * 0.9, 180, 260) }}
+        >
           <p className="chrome-text font-display text-[13px] uppercase tracking-[0.34em] sm:text-[15px]">standard rules</p>
           <p className="accent-text mt-1 font-tech text-[10px] uppercase tracking-[0.28em]">{quip}</p>
         </div>
